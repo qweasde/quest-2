@@ -1,0 +1,432 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+html, body {
+  width: 100%;
+  height: 100dvh;
+  font-family: "Montserrat Alternates";
+  background: #FFBABA;
+  overflow: hidden; 
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  all: unset; /* убирает почти все встроенные стили */
+  display: inline-block; /* чтобы снова можно было задавать размеры */
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-text {
+  position: relative; /* нужно для абсолютного позиционирования облака */
+  overflow: visible;  /* чтобы облако могло выходить за пределы блока */
+}
+
+.header-text .cloud {
+  position: absolute;
+  top: 20px;       /* вертикальное смещение */
+  right: -80px;    /* облако выступает за правый край на 50px */
+  width: 150px;    /* можно настроить размер облака */
+  height: auto;     /* чтобы облако было позади текста */
+}
+
+/* контейнер кнопки уже есть */
+.audio-btn {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: #FFBABA;
+  width: 80%;
+  border-radius: 50px;
+  font-family: 'Montserrat';
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative; /* нужно для псевдоэлемента */
+  overflow: visible;
+}
+
+.audio-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* эффект эха */
+.audio-btn::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  background-color: #FFBABA;
+  top: 0;
+  left: 0;
+  animation: pulse 1.5s infinite;
+  opacity: 0.6;
+}
+
+/* плавная анимация пульса */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* hover цвет кнопки */
+.audio-btn:hover {
+  background-color: #ffa4a4;
+  transition: 0.3s;
+}
+
+.quest-block-content {
+    background-color: #FFBABA;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.quest-block-hello h1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 10 0;
+}
+
+.ready-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ready-btn button {
+    font-family: "Great Vibes";
+    font-size: 24px;
+    background-color: #350002;
+    width: 265px;
+    height: 55px;
+    border-radius: 20px;
+    color: #FFBABA;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.ready-btn button:hover {
+    background-color: #660003;
+}
+
+.steps-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.steps-content p {
+    color: #FFBABA;
+}
+
+.steps {
+  position: relative;  /* чтобы абсолютное позиционирование работало */
+  overflow: hidden;   /* чтобы картинка могла выступать за блок */
+  height: 100%;
+}
+
+/* картинка букета */
+.steps .bouquet {
+  position: absolute;
+  top: 70px;
+  left: 20%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: auto;
+}
+
+#puzzle-container {
+  display: grid;
+  grid-template-columns: repeat(3, 50px);
+  grid-template-rows: repeat(3, 50px);
+  gap: 2px;
+  justify-content: center;
+}
+
+.puzzle-piece {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc; /* твое фото */
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  background-size: cover;
+  transition: all 0.2s ease;
+}
+
+.puzzle-piece.empty {
+  background: #f0f0f0; /* пустая ячейка */
+  cursor: default;
+}
+
+
+.solve-btn {
+  background-color: #350002;
+  width: 300px;
+  color: #FFBABA;
+  padding: 10px 0;
+  border-radius: 10px;
+}
+
+.puzzle-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #FFBABA;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  text-align: center;
+  min-width: 300px;
+}
+
+.puzzle-popup-text {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.puzzle-popup-btn {
+  background: #350002;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.puzzle-popup-btn:hover {
+  background: #FFBABA;
+}
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* контейнер для чекбоксов */
+.checkbox-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* скрываем стандартный чекбокс */
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+/* создаём кастомный квадрат */
+.custom-checkbox {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  height: 30px;
+  font-size: 13px;
+  user-select: none;
+  margin: 0 10px;
+}
+
+/* квадратик для галочки */
+.custom-checkbox .checkmark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 25px;
+  height: 25px;
+  background-color: #350002;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+
+/* галочка при выборе */
+.custom-checkbox input:checked + .checkmark {
+  background-color: #350002;
+  transition: all 0.3s ease;
+}
+
+/* псевдо-галочка */
+.custom-checkbox .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked + .checkmark::after {
+  display: block;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+
+
+
+/* скрываем блоки и центрируем попап */
+.quest-block-hello,
+.quest-block-quiz {
+    width: 100%;
+}
+
+.quiz-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.9); /* темный фон с прозрачностью */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+/* Попап */
+.quiz-popup {
+    background: #ffa7a7;
+    border-radius: 20px;
+    text-align: center;
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    line-height: 2;
+}
+
+.close-popup {
+    color: #FFBABA;
+    padding: 10px 20px;
+    background-color: #350002;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.quiz-content {
+  background-color: #FFBABA;
+  border-radius: 20px;
+  margin-top: 20px;
+  height: 274px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.quiz-content h1 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 10 0;
+}
+
+.quiz-content p {
+  text-align: center;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-btn {
+  color: #FFBABA;
+  font-weight: 400;
+  background-color: #6b0d10;
+  padding: 10px;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#quiz-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+#quiz-form label {
+  color: #FFBABA;
+  font-weight: 400;
+  background-color: #350002;
+  padding: 10px;
+  border-radius: 10px;
+}
